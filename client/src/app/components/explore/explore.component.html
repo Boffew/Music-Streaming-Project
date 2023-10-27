@@ -1,0 +1,84 @@
+<div style="padding-top: 5rem; padding-bottom: 9rem;">
+    <img src="https://res.cloudinary.com/dfxonocct/image/upload/v1698214198/SoundCloud-Logo.wine21_j4rzjr.png"
+        alt="Logo" style="height: 3rem; margin-left: 27rem; margin-top: -4rem;">
+    <form class="mx-auto text-center col-9 d-flex" id="search" (submit)="search()">
+        <input type="search" class="no-outline col-11" placeholder="Search" [(ngModel)]="term" name="term">
+        <button type="submit">
+            <mat-icon>search</mat-icon>
+        </button>
+    </form>
+    <div *ngIf="!searched" style="margin-right: 2rem;">
+        <h2 class="text-center my-5" style="font-weight: bold;">Explore🌍</h2>
+        <section class="p-0" style="margin-left: 1.5rem;">
+            <h2 class="mb-2 mt-4"
+                style="font-size: 17px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">
+                Popular 🎧
+            </h2>
+            <div class="d-flex col-12 scrollbar1 p-0 pb-1" style="overflow-x: scroll;">
+                <div *ngFor="let song of popular; let i = index;" class="mx-1" style="width: 22rem; flex-shrink: 0;">
+                    <app-song [song]="song" [showUsername]="true"></app-song>
+                </div>
+            </div>
+        </section>
+        <section style="margin-left: 1.5rem;">
+            <h2 class="mb-2 mt-4"
+                style="font-size: 17px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">
+                New 🎧
+            </h2>
+            <div class="d-flex col-12 scrollbar1 p-0 pb-1" style="overflow-x: scroll;">
+                <div *ngFor="let song of newSongs; let i = index;" class="mx-1" style="width: 22rem; flex-shrink: 0;">
+                    <app-song [song]="song" [showUsername]="true"></app-song>
+                </div>
+            </div>
+        </section>
+
+        <div style="padding: 0.8rem;"></div>
+        <section style="margin-left: 1.5rem;">
+            <h2 class="mb-2 mt-4"
+                style="font-size: 17px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">
+                People 🎤
+            </h2>
+            <div class="d-flex col-12 p-0 pb-1 scrollbar1" style="overflow-x: scroll;">
+                <ng-container *ngFor="let user of users; let i = index;">
+                    <div class="mx-1" style="width: 22rem; flex-shrink: 0;">
+                        <app-user [user]="user"></app-user>
+                    </div>
+                </ng-container>
+            </div>
+        </section>
+        <div style="padding: 0.8rem;"></div>
+        <section style="margin-left: 1.5rem;">
+            <h5 class="mb-2 mt-4"
+                style="font-size: 7; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">
+                Collections🎼
+            </h5>
+            <div class="d-flex col-12 scrollbar1 p-0 pb-1" style="overflow-x: scroll;">
+                <div *ngFor="let collection of collections; let i = index;" class="mx-1"
+                    style="width: 22rem; flex-shrink: 0;">
+                    <app-collection [collection]="collection"></app-collection>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div *ngIf="searched" class="p-5">
+        <div class="mx-auto d-flex justify-content-center" style="flex-wrap: wrap;">
+            <ng-container *ngFor="let song of songs; let i = index;">
+                <div class="mx-4 py-2" style="width: 22rem;" *ngIf="includesIgnoreCase(song.title, searched)">
+                    <app-song [song]="song"></app-song>
+                </div>
+            </ng-container>
+            <ng-container *ngFor="let collection of collections; let i = index;">
+                <div class="mx-4 py-2" style="width: 22rem;"
+                    *ngIf="includesIgnoreCase(collection.title, searched) || includesIgnoreCase(collection.category, searched)">
+                    <app-collection [collection]="collection"></app-collection>
+                </div>
+            </ng-container>
+            <ng-container *ngFor="let user of users; let i = index;">
+                <div class="mx-4 py-2" style="width: 22rem;" *ngIf="includesIgnoreCase(user.username, searched)">
+                    <app-user [user]="user"></app-user>
+                </div>
+            </ng-container>
+        </div>
+
+    </div>
+</div>
